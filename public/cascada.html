@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr" crossorigin="anonymous">
+    <head>
+        <meta charset="utf-8">
+        <title>Pasatiempo en Cascada</title>
+        <link rel="icon" href="https://agora.unileon.es/pluginfile.php/1/theme_adaptable/favicon/1618900747/favicon.ico">  
+        <link rel="stylesheet" type="text/css" href="/stylesheets/cascada.css"/>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" /> 
+        <script src="/javascripts/cascada.js" language="javascript" type="text/javascript"></script>
+        <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script> 
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>   
+    </head>
+    <body>
+        <video autoplay loop><source src="/assets/cascada.mp4" type="video/mp4"></video>
+        <div id="main_frame">
+            <header>
+                <div class="box" >
+                    <h3> PASATIEMPO EN CASCADA </h3>
+                </div>
+            </header>
+            <div id="description_frame">           
+                    Identifique la primera palabra y la última de cada bloque con las pistas que se 
+                    dan. A continuación, trate de descubrir las palabras intermedias. Para lograrlo,
+                    cambie una letra de la primera palabra para obtener la próxima y, después, 
+                    alterne el orden de una o varias letras para encontrar la siguiente. Siga así,
+                    sucesivamente, hasta que logre completar ambos casilleros. Todas las palabras
+                    intermedias deben tener significado.
+            </div>
+            <div id="container_frame">
+                <table id="csc_table">
+                    <tbody>
+                        <tr>
+                            <td id="csc_column_board">
+                                <div class="center_txt">
+                                    <h1 style="padding-left: 10rem;">TABLERO EN CASCADA</h1>
+                                </div>
+                                <div id="csc_board">
+                                    <div>
+                                        <li id="btn_container">
+                                            <ul><button class="button" id="reset" onclick=cleanBoard()>REINICIAR<br>TABLERO</button></ul>
+                                            <ul><button class="button" id="save" onclick=saveBoardInStorage() disabled>GUARDAR<br>TABLERO</button></ul>
+                                            <ul><button class="button" id="load" onmouseup=loadBoardFromStorage() disabled>CARGAR<br>TABLERO</button></ul>
+                                            <ul><button class="button" id="delete" onclick=cleanStorage() disabled>LIMPIAR<br>STORAGE</button></ul>
+                                        </li>                                   
+                                    </div>
+                                    <table class="cascade">
+                                        <tbody>
+                                            <tr id="fila1">
+                                                <td></td>
+                                                <td><input class="1" id="11" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" autocomplete="off"></td>                                              
+                                                <td><input class="1" id="12" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" autocomplete="off"></td>
+                                                <td><input class="1" id="13" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" autocomplete="off"></td>
+                                                <td><input class="1" id="14" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" autocomplete="off"></td>
+                                                <td style="text-align: center;">1</td>
+
+                                            </tr>
+                                            <tr id="fila2">
+                                                <td>&nbsp;</td>
+                                                <td><input class="2" id="21" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>                                              
+                                                <td><input class="2" id="22" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="2" id="23" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="2" id="24" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                            </tr>
+                                            <tr id="fila3">
+                                                <td>&nbsp;</td>
+                                                <td><input class="3" id="31" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>                                              
+                                                <td><input class="3" id="32" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="3" id="33" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="3" id="34" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                            </tr>
+                                            <tr id="fila4">
+                                                <td>&nbsp;</td>
+                                                <td><input class="4" id="41" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>                                              
+                                                <td><input class="4" id="42" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="4" id="43" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="4" id="44" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                            </tr>
+                                            <tr id="fila5">
+                                                <td>&nbsp;</td>
+                                                <td><input class="5" id="51" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>                                              
+                                                <td><input class="5" id="52" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="5" id="53" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="5" id="54" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                            </tr>
+                                            <tr id="fila6">
+                                                <td>&nbsp;</td>
+                                                <td><input class="6" id="61" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>                                              
+                                                <td><input class="6" id="62" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="6" id="63" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="6" id="64" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td style="text-align: center;">2</td>
+                                            </tr>
+                                            <tr id="fila7">
+                                                <td style="text-align: center;">3</td>
+                                                <td><input class="7" id="71" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>                                              
+                                                <td><input class="7" id="72" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="7" id="73" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="7" id="74" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="7" id="75" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="7" id="76" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                            </tr>
+                                            <tr id="fila8">
+                                                <td>&nbsp;</td>
+                                                <td><input class="8" id="81" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>                                              
+                                                <td><input class="8" id="82" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="8" id="83" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="8" id="84" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="8" id="85" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="8" id="86" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                            </tr>
+                                            <tr id="fila9">
+                                                <td>&nbsp;</td>
+                                                <td><input class="9" id="91" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>                                              
+                                                <td><input class="9" id="92" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="9" id="93" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="9" id="94" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="9" id="95" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="9" id="96" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                            </tr>
+                                            <tr id="fila10">
+                                                <td>&nbsp;</td>
+                                                <td><input class="10" id="101" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>                                              
+                                                <td><input class="10" id="102" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="10" id="103" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="10" id="104" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="10" id="105" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="10" id="106" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                            </tr>
+                                            <tr id="fila11">
+                                                <td>&nbsp;</td>
+                                                <td><input class="11" id="111" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>                                              
+                                                <td><input class="11" id="112" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="11" id="113" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="11" id="114" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="11" id="115" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="11" id="116" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                            </tr>
+                                            <tr id="fila12">
+                                                <td style="text-align: center;">4</td>
+                                                <td><input class="12" id="121" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>                                              
+                                                <td><input class="12" id="122" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="12" id="123" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="12" id="124" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="12" id="125" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                                <td><input class="12" id="126" type="text" maxlength="1" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" disabled autocomplete="off"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+                                </div>
+                                <p style="text-align: center; margin: 0 0 2em 0;">1.Familia en Escocia. 2.Tristeza y dolor por algo. 3. Termino algo definitivamente. 4. El que torea.</p>
+                            </td>
+                            <td id="csc_column_clues">
+                                <div class="center_txt1">
+                                    <h1>PISTAS</h1>
+                                </div>
+                                <div id="csc_clues">
+                                    <table class="cascade">
+                                        <tr>
+                                            <td style="padding-right: 20px;"><input class="clue" id="clue0" type="text" maxlength="20" style="background-color: #889ccf; border-color: rgb(0, 0, 0);" autocomplete="off"></td>
+                                            <td><button class="button" onclick=searchWords()>BUSCAR PALABRAS</button></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div id="csc_clues">
+                                    <p style="font-size:larger;"><b style="text-align: center; padding-left: 30%;">PISTAS RESTANTES:<stan id="cluesLeft">3</stan></b><br>CADA PISTA REVELA AL JUGADOR LAS PALABRAS COMPUESTAS POR LAS LETRAS
+                                        ESPECIFICADAS EN LA CASILLA SUPERIOR
+                                    </p>                                  
+                                </div>
+                                <div id="csc_clues">
+                                    <stan>PALABRAS EN EL DICCIONARIO:</stan><br>                              
+                                </div>
+                                <div id="clue_words">
+                                                                  
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <audio id="audio" controls><source src="https://tonosmovil.net/wp-content/uploads/videojuegos/ninos_gritando_yeeeeee.mp3" type="audio/mpeg"></audio>
+                <audio id="audio2" controls><source type="audio/wav" src="/assets/correcto.wav"></audio>
+                <audio id="audio3" controls><source src="https://pic.pikbest.com/00/55/72/94H888piCuiy.mp3" type="audio/mp3"></audio>
+                <footer>
+                    <p class="copyright">© AUTHOR PABLO JAVIER BARRIO NAVARRO</p>
+                </footer>
+            </div>
+        </div>
+    </body>
+</html>

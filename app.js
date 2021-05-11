@@ -21,6 +21,7 @@ liveReloadServer.server.once("connection", () => {
 var app = express();
 
 app.use(connectLiveReload());
+console.log(__dirname)
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -31,16 +32,15 @@ app.use(express.static(publicDirectory));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-
 // error handler 
 app.use((error, req, res, next) => {
   if (!error.statusCode) error.statusCode = 500;
  
   if (error.statusCode === 404) {
     console.log(`${req.ip} tried to access ${req.originalUrl}`)
-    return res.status(404).redirect('error.html');
-    
+    return res.status(404).sendFile('error.html', {root: publicDirectory});   
   }
+
   return res
     .status(error.statusCode)
     .json({ error: error.toString() });
