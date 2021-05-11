@@ -33,17 +33,9 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // error handler 
-app.use((error, req, res, next) => {
-  if (!error.statusCode) error.statusCode = 500;
- 
-  if (error.statusCode === 404) {
-    console.log(`${req.ip} tried to access ${req.originalUrl}`)
-    return res.status(404).sendFile('error.html', {root: publicDirectory});   
-  }
-
-  return res
-    .status(error.statusCode)
-    .json({ error: error.toString() });
-})
+app.use((req, res, next) => {
+  res.status(404).sendFile('error.html', {root: publicDirectory});
+  console.log(`${req.ip} tried to access ${req.originalUrl}`)
+});
 
 module.exports = app;
