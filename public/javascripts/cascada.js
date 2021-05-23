@@ -2,6 +2,7 @@
  * TROZO DE CÓDIGO PARA OBTENER EL DICCIONARIO DEL SERVIDOR
  */
 const TXT_URL = 'https://ordenalfabetix.unileon.es/aw/diccionario.txt';
+const IP_SERVIDOR = 'http://192.168.0.31:3000'
 var diccionario = ""
 
 async function getDictionary() {
@@ -23,6 +24,7 @@ async function getDictionary() {
         diccionario.push("nací");
         diccionario.push("nace");
         diccionario.push("tolero")
+        console.log(localStorage);
     }catch (e) {
         console.log(`Error: ${e}`)
         alert("[ERROR]\nNo se ha podido cargar el diccionario del servidor")
@@ -167,14 +169,19 @@ function disableStorage(){
  * Funcion que guarda los datos del tablero en el almacenamiento local
  */
 function saveBoardInStorage(){
+    var data = []
     document.querySelectorAll('input').forEach(e => {
+        
         var letter = e.value
+        var parameters = []
+        parameters.push(letter);
+        parameters.push(e.disabled);
         var cell = e.id
-        var data = []
-        data.push(letter);
-        data.push(e.disabled)
-        localStorage.setItem(cell, JSON.stringify(data))
+        data.push({
+            [cell]:parameters
+        });
     });
+    localStorage.setItem(1, JSON.stringify(data));
     document.getElementById('load').disabled = false;
     swal("¡Guardado con éxito!", "Se ha guardado el contenido del tablero en el almacenamiento local", "success", {
         button: "¡Entendido!",
@@ -462,9 +469,12 @@ function isWordInDict(word){
  * @param {*} r 
  * @param {*} palabraFormada 
  */
-function comprobeCorrectWord(r, palabraFormada){
+async function comprobeCorrectWord(r, palabraFormada){
+    var isValid = false;
     if(r == 1){
-        if(palabraFormada == "clan"){
+        isValid = await checkServerCorrectWord(palabraFormada, r);
+        console.log('Lo que entra en el if ', isValid)
+        if(isValid){
             document.getElementById('audio2').play();
             swal("¡Correcto!", "La palabra 1 es correcta", "success", {
                 button: "Oh yeah!",
@@ -479,7 +489,8 @@ function comprobeCorrectWord(r, palabraFormada){
             clearRow(r);
         }
     }else if(r == 6){
-        if(palabraFormada == "pena"){
+        isValid = await checkServerCorrectWord(palabraFormada, r);
+        if(isValid){
             document.getElementById('audio2').play();
             swal("¡Correcto!", "La palabra 2 es correcta", "success", {
                 button: "Oh yeah!",
@@ -495,7 +506,8 @@ function comprobeCorrectWord(r, palabraFormada){
             clearRow(r);
         } 
     }else if(r == 7){
-        if(palabraFormada == "remato"){
+        isValid = await checkServerCorrectWord(palabraFormada, r);
+        if(isValid){
             document.getElementById('audio2').play();
             swal("¡Correcto!", "La palabra 3 es correcta", "success", {
                 button: "Oh yeah!",
@@ -510,7 +522,8 @@ function comprobeCorrectWord(r, palabraFormada){
             clearRow(r);
         }
     }else if(r == 12){
-        if(palabraFormada == "torero"){
+        isValid = await checkServerCorrectWord(palabraFormada, r);
+        if(isValid){
             document.getElementById('audio').play();
             document.getElementById('audio2').play();
             swal("¡PASATIEMPOS COMPLETADO!", "Enhorabuena has completado la cascada", "success", {
@@ -528,6 +541,21 @@ function comprobeCorrectWord(r, palabraFormada){
     }else{
         console.log("NO ENTRO")
     }
+}
+
+async function checkServerCorrectWord(palabraFormada, num) {
+    try {
+        return 'true' === await getCorrection(palabraFormada, num);
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function getCorrection(palabraFormada, num){
+    return $.post(
+        IP_SERVIDOR+"/palabras",
+        { palabraFormada: palabraFormada , numPalabra: num }
+    );
 }
 
 /**
