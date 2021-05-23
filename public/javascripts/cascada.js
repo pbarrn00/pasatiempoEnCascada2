@@ -2,7 +2,7 @@
  * TROZO DE CÓDIGO PARA OBTENER EL DICCIONARIO DEL SERVIDOR
  */
 const TXT_URL = 'https://ordenalfabetix.unileon.es/aw/diccionario.txt';
-const IP_SERVIDOR = 'http://192.168.0.31:3000'
+const IP_SERVIDOR = 'http://127.0.0.1:3000'
 var diccionario = ""
 
 async function getDictionary() {

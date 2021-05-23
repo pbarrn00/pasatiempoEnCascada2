@@ -25,29 +25,28 @@ router.get('/cascada3', function(req, res) {
 
 /* POST soluciones cascada 1 */
 router.post('/palabras', function(req, res) {
-  //Soluciones handler pasatiempos 2
-  console.log(req.body.palabraFormada);
-  console.log(req.body.numPalabra)
   var palabraFormada =  req.body.palabraFormada
   var num = req.body.numPalabra
   let soluciones = ['clan', 'pena', 'remato', 'torero']
-  console.log('En el servidor se devuelve: ', comprobarSoluciones(palabraFormada, num, soluciones))
   res.end(JSON.stringify(comprobarSoluciones(palabraFormada, num, soluciones)))
 });
 
 /* POST soluciones cascada 2 */
-router.post('/cascada2', function(req, res) {
-  //Soluciones handler pasatiempos 2
-  let soluciones = ['clan', 'pena', 'remato', 'torero']
-
+router.post('/palabras2', function(req, res) {
+  var palabraFormada =  req.body.palabraFormada
+  var num = req.body.numPalabra
+  let soluciones = ['pera', 'tera', 'anfeta', 'antera']
+  res.end(JSON.stringify(comprobarSoluciones(palabraFormada, num, soluciones)))
 });
 
-router.post('/cascada3', function(req, res) {
-  //Soluciones handler pasatiempos 3
-  let soluciones = ['clan', 'pena', 'remato', 'torero']
-  
+router.post('/palabras3', function(req, res) {
+  var palabraFormada =  req.body.palabraFormada
+  var num = req.body.numPalabra
+  let soluciones = ['euro', 'duna', 'funcar', 'bronce']
+  res.end(JSON.stringify(comprobarSoluciones(palabraFormada, num, soluciones)))
 });
 
+//Soluciones handler pasatiempos 2
 function comprobarSoluciones(palabraFormada, n, soluciones){
   var esValido = false;
   
