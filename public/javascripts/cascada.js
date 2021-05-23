@@ -176,9 +176,8 @@ function saveBoardInStorage(){
         var parameters = []
         parameters.push(letter);
         parameters.push(e.disabled);
-        var cell = e.id
         data.push({
-            [cell]:parameters
+            content:parameters
         });
     });
     localStorage.setItem(1, JSON.stringify(data));
@@ -186,22 +185,26 @@ function saveBoardInStorage(){
     swal("¡Guardado con éxito!", "Se ha guardado el contenido del tablero en el almacenamiento local", "success", {
         button: "¡Entendido!",
     });
+    console.log(localStorage);
 }
 
 /**
  * Funcion que carga los datos del tablero en el almacenamiento local
  */
 function loadBoardFromStorage(){
+    var data = JSON.parse(localStorage.getItem(1));
+    //console.log(data)
+    var counter = 0;      
     document.querySelectorAll('input').forEach(e => {
-        var cell = e.id
-        var data = JSON.parse(localStorage.getItem(cell));          
-        e.value = data[0]
-        e.disabled = data[1]  
+        var cellContent = data[counter++]
+        e.value = cellContent.content[0]
+        e.disabled = cellContent.content[1]  
     });
     swal("¡Cargado con éxito!", "Se ha cargado el contenido del tablero en el almacenamiento local", "success", {
         button: "¡Entendido!",
     });
     document.getElementById("clue_words").innerHTML=""
+    console.log(localStorage);
 }
 
 /**
@@ -212,7 +215,8 @@ function cleanStorage(){
     document.getElementById('load').disabled = true;
     swal("Vaciando almacenamiento...", "¡Se ha borrado todo el almacenamiento local!", "info", {
         button: "¡Entendido!",
-    });  
+    });
+    console.log(localStorage);
 }
 
 /**
@@ -473,7 +477,7 @@ async function comprobeCorrectWord(r, palabraFormada){
     var isValid = false;
     if(r == 1){
         isValid = await checkServerCorrectWord(palabraFormada, r);
-        console.log('Lo que entra en el if ', isValid)
+        //console.log('Lo que entra en el if ', isValid)
         if(isValid){
             document.getElementById('audio2').play();
             swal("¡Correcto!", "La palabra 1 es correcta", "success", {
@@ -543,6 +547,12 @@ async function comprobeCorrectWord(r, palabraFormada){
     }
 }
 
+/**
+ * Función que obtiene la confirmación del servidor de que la palabra es correcta
+ * @param {*} palabraFormada 
+ * @param {*} num 
+ * @returns boolean if the word is correct
+ */
 async function checkServerCorrectWord(palabraFormada, num) {
     try {
         return 'true' === await getCorrection(palabraFormada, num);
@@ -551,10 +561,16 @@ async function checkServerCorrectWord(palabraFormada, num) {
     }
 }
 
+/**
+ * Query al servidor para comprobar que la palabra clave al servidor es correcta
+ * @param {*} palabraFormada 
+ * @param {*} num 
+ * @returns 
+ */
 async function getCorrection(palabraFormada, num){
     return $.post(
         IP_SERVIDOR+"/palabras",
-        { palabraFormada: palabraFormada , numPalabra: num }
+        { palabraFormada: palabraFormada , numPalabra: num },
     );
 }
 
