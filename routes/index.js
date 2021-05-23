@@ -23,6 +23,11 @@ router.get('/cascada3', function(req, res) {
   res.sendFile('cascada3.html', {root: publicDirectory});
 });
 
+/* GET readme.md */
+router.get('/README.md', function(req, res) {
+  res.sendFile('README.md', {root: publicDirectory});
+});
+
 /* POST soluciones cascada 1 */
 router.post('/palabras', function(req, res) {
   var palabraFormada =  req.body.palabraFormada
