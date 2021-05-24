@@ -244,7 +244,7 @@ function cleanBoard(){
     var ide = ""+e.target.id
     var row = e.target.className
 
-    if(e.keyCode == 192 || (e.keyCode >= 65 && e.keyCode < 90)){
+    if(e.keyCode == 192 || (e.keyCode >= 65 && e.keyCode <= 90)){
         if(row < 7){
             if(ide.charAt(1) == 4){
                 document.getElementById(ide).blur();

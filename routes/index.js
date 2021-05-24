@@ -40,14 +40,14 @@ router.post('/palabras', function(req, res) {
 router.post('/palabras2', function(req, res) {
   var palabraFormada =  req.body.palabraFormada
   var num = req.body.numPalabra
-  let soluciones = ['pera', 'tera', 'anfeta', 'antera']
+  let soluciones = ['pera', 'pare', 'cámara', 'brasas']
   res.end(JSON.stringify(comprobarSoluciones(palabraFormada, num, soluciones)))
 });
 
 router.post('/palabras3', function(req, res) {
   var palabraFormada =  req.body.palabraFormada
   var num = req.body.numPalabra
-  let soluciones = ['euro', 'duna', 'funcar', 'bronce']
+  let soluciones = ['euro', 'olor', 'nombre', 'brizna']
   res.end(JSON.stringify(comprobarSoluciones(palabraFormada, num, soluciones)))
 });
 
