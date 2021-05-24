@@ -319,53 +319,49 @@ function wordHandler(e){
             if(row == 1  && palabraFormada.length == 4){
                 comprobeCorrectWord(row, palabraFormada);              
             }else if(row == 6 && palabraFormada.length == 4){
-                comprobeKeyDiff(row, palabraFormada);
+                palabraAnterior =  getPalabraFormada(row-1)
+                if(palabraFormada.length == palabraAnterior.length){
+                    checkCorrectKeyChange(palabraAnterior, palabraFormada, row)
+                }else{
+                    document.getElementById('audio3').play();
+                    swal("¡Vaya!", "¡Parece ser que no has completado la palabra anterior!", "error", {
+                        button: "¡Lo pillo!",
+                    });
+                    clearRow(row);
+                }
             }else if(row == 7 && palabraFormada.length == 6){
                 comprobeCorrectWord(row, palabraFormada);
             }else if(row == 12 && palabraFormada.length == 6){
-                comprobeKeyDiff(row, palabraFormada);
+                palabraAnterior =  getPalabraFormada(row-1)
+                if(palabraFormada.length == palabraAnterior.length){
+                    checkCorrectKeyChange(palabraAnterior, palabraFormada, row)
+                }else{
+                    document.getElementById('audio3').play();
+                    swal("¡Vaya!", "¡Parece ser que no has completado la palabra anterior!", "error", {
+                        button: "¡Lo pillo!",
+                    });
+                    clearRow(row);
+                }
             }else{
                 /*Se comprueba que la palabra tiene que tener las letras de 
                 la palabra anterior menos 1 y se actualiza la siguiente linea*/
                 if(row != 7){
                     palabraAnterior =  getPalabraFormada(row-1)
                     if(palabraFormada.length == palabraAnterior.length){
-                        var diff = comprobeOneDifference(palabraFormada, palabraAnterior)
-                        if(diff == 1 || diff == 0){
-                            if(comprobeNoRepeatedWord(row, palabraFormada) == false){
-                                enableRow(++row)
-                                rowD = row - 2;
-                                disableRow(rowD)
-                            }else{
-                                document.getElementById('audio3').play();
-                                swal("¡Oh oh!", "Esa palabra ya la has utilizado en la cascada", "warning", {
-                                    button: "¡Lo pillo!",
-                                });
-                                clearRow(row)  
-                            }                           
-                        }else if(diff == 999){
-                            document.getElementById('audio3').play();
-                            swal("¡Oh oh!", "¡La nueva palabra no puede ser igual a la anterior!", "warning", {
-                                button: "¡Lo pillo!",
-                            });
-                            clearRow(row)
+                        if(row == 2 || row == 4 || row == 8 || row == 10){
+                            checkCorrectChange(palabraAnterior, palabraFormada,row);
                         }else{
-                            document.getElementById('audio3').play();
-                            swal("Algo ha ido mal...", "La palabra solo puede tener un caracter de diferencia\nDiferencias con la palabra anterior: "+diff, "warning", {
-                                button: "¡Valep!",
-                            });
-                            clearRow(row)
+                            checkCorrectCross(palabraAnterior, palabraFormada,row);
                         }
                     }else{
                         document.getElementById('audio3').play();
                         swal("¡Vaya!", "¡Parece ser que no has completado la palabra anterior!", "error", {
                             button: "¡Lo pillo!",
                         });
-                        clearRow(row)
+                        clearRow(row);
                     }                   
                 }                             
             }
-
         }else{
             document.getElementById('audio3').play();
             swal("¡Wooooops!", "La palabra "+palabraFormada+" no está en el diccionario.", "error", {
@@ -377,58 +373,125 @@ function wordHandler(e){
 }
 
 /**
+ * Función que permite comprobar que el cambio de letra se realiza correctamente
+ * @param {*} palabraAnterior 
+ * @param {*} palabraFormada 
+ * @param {*} row 
+ */
+function checkCorrectChange(palabraAnterior, palabraFormada, row){
+    if(checkChange(palabraAnterior, palabraFormada)){
+        /* Cambio de letra correcto */
+        if(!comprobeRepeatedWord(row, palabraFormada)){
+            enableRow(++row)
+            rowD = row - 2;
+            disableRow(rowD)
+        }else{
+            document.getElementById('audio3').play();
+            swal("¡Oh oh!", "Esa palabra ya la has utilizado en la cascada", "warning", {
+                button: "¡Lo pillo!",
+            });
+            clearRow(row)  
+        } 
+    }else{
+        /* Cambio de letra incorrecto */
+        document.getElementById('audio3').play();
+        swal("Algo ha ido mal...", "La palabra solo puede tener un caracter de diferencia en el mismo orden", "warning", {
+            button: "¡Valep!",
+        });
+        clearRow(row)
+    }
+}
+
+/**
+ * Función que permite comprobar que se realiza la permutación de letras correctamente
+ * @param {*} palabraAnterior 
+ * @param {*} palabraFormada 
+ * @param {*} row 
+ */
+function checkCorrectCross(palabraAnterior, palabraFormada, row){
+    if(checkCross(palabraAnterior, palabraFormada)){
+        /* Permutación correcta */
+        if(!comprobeRepeatedWord(row, palabraFormada)){
+            enableRow(++row)
+            rowD = row - 2;
+            disableRow(rowD)
+        }else{
+            document.getElementById('audio3').play();
+            swal("¡Oh oh!", "Esa palabra ya la has utilizado en la cascada", "warning", {
+                button: "¡Lo pillo!",
+            });
+            clearRow(row)  
+        }
+    }else{
+        /* Permutación incorrecta */
+        document.getElementById('audio3').play();
+        swal("¡Vaya!", "En esta fila solo puedes hacer permutaciones de las letras, no puedes cambiar ninguna", "error", {
+            button: "¡Lo pillo!",
+        });
+        clearRow(row)
+    }
+}
+
+/**
+ * Función que comprueba que se realiza correctamente el cambio de letra en la palabra clave y si es correcto
+ * llama a la función que corrige las palabras claves
+ * @param {*} palabraAnterior 
+ * @param {*} palabraFormada 
+ * @param {*} row 
+ */
+function checkCorrectKeyChange(palabraAnterior, palabraFormada, row){
+    if(checkChange(palabraAnterior, palabraFormada)){
+        /* Cambio de letra correcto */
+        if(!comprobeRepeatedWord(row, palabraFormada)){
+            comprobeCorrectWord(row, palabraFormada)
+        }else{
+            document.getElementById('audio3').play();
+            swal("¡Oh oh!", "Esa palabra ya la has utilizado en la cascada", "warning", {
+                button: "¡Lo pillo!",
+            });
+            clearRow(row)  
+        } 
+    }else{
+        /* Cambio de letra incorrecto */
+        document.getElementById('audio3').play();
+        swal("Algo ha ido mal...", "La palabra solo puede tener un caracter de diferencia en el mismo orden", "warning", {
+            button: "¡Valep!",
+        });
+        clearRow(row)
+    }
+}
+
+/**
  * Funcion que comprueba que no se ha utilizado esa palabra en toda la cascada
  * @param {*} row 
  * @param {*} palabraFormada 
  * @returns true or false
  */
-function comprobeNoRepeatedWord(row, palabraFormada){
+function comprobeRepeatedWord(row, palabraFormada){
     for (let index = 1; index < row-1; index++) {
         if(palabraFormada == getPalabraFormada(index)) return true;      
     }
     return false;
 }
 
-/**
- * Funcion que comprueba que hay solo 1 o 0 diferencias con la palabra clave
- * asi como que no sea la misma palabra repetida
- * @param {*} row 
- * @param {*} palabraFormada 
- */
-function comprobeKeyDiff(row, palabraFormada){
-    palabraAnterior =  getPalabraFormada(row-1)
-    if(palabraFormada.length == palabraAnterior.length){
-        var diff = comprobeOneDifference(palabraFormada, palabraAnterior)
-        if(diff == 1 || diff == 0){
-            if(comprobeNoRepeatedWord(row, palabraFormada) == false){
-                comprobeCorrectWord(row, palabraFormada);
-            }else{
-                document.getElementById('audio3').play();
-                swal("¡Oh oh!", "Esa palabra ya la has utilizado en la cascada", "warning", {
-                    button: "¡Lo pillo!",
-                });
-                clearRow(row)  
-            }  
-        }else if(diff == 999){
-            document.getElementById('audio3').play();
-            swal("¡Oh oh!", "¡La nueva palabra no puede ser igual a la anterior!", "warning", {
-                button: "¡Lo pillo!",
-            });
-            clearRow(row)
-        }else{
-            document.getElementById('audio3').play();
-            swal("Algo ha ido mal...", "La palabra solo puede tener un caracter de diferencia\nDiferencias con la palabra anterior: "+diff, "warning", {
-                button: "¡Valep!",
-            });
-            clearRow(row)
-        }
-    }else{
-        document.getElementById('audio3').play();
-        swal("¡Vaya!", "¡Parece ser que no has completado la palabra anterior!", "error", {
-            button: "¡Lo pillo!",
-        });
-        clearRow(row)
-    }
+ function checkCross(word1, word2) {
+    /* Comprobacion a mano ya que la tilde en la i no cumple los requisitos del juego. */
+    if (word1 === "cian" && word2 === "nací")
+        return true
+
+    let coincidences = 0
+    for (let i = 0; i < word1.length; i++)
+        if (word1.includes(word2[i]))
+            coincidences++
+    return coincidences === word1.length;
+}
+
+function checkChange(word1, word2) {
+    let coincidences = 0
+    for (let i = 0; i < word1.length; i++)
+        if (word1[i] === word2[i])
+            coincidences++
+    return coincidences === word1.length - 1;
 }
 
 /**
@@ -640,29 +703,4 @@ function clearRow(row){
     }
 }
  
-/**
- * Funcion que compara si la palabra formada tiene únicamente un
- * caracter de diferencia con la anterior o si es exactamente la misma
- * @param {} formada 
- * @param {*} anterior 
- * @returns int num diferencias
- */
-function comprobeOneDifference(formada, anterior){
-    var difference = 0;
-    if(formada == anterior)
-        return 999
 
-    let palabra_ant_lista =  anterior.split("")
-    let palabra_lista = formada.split("")
-    let coincidencias = 0;
-
-    for (let i = 0; i < palabra_ant_lista.length ; i++) {
-        if (palabra_ant_lista.includes(palabra_lista[i])) {
-            palabra_ant_lista[palabra_ant_lista.indexOf(palabra_lista[i])] = "-1"
-            coincidencias++;
-        }
-    }
-
-    difference = palabra_lista.length - coincidencias;
-    return difference;
-}

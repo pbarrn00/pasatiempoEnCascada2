@@ -57,24 +57,33 @@ function comprobarSoluciones(palabraFormada, n, soluciones){
   
   switch(n){
     case '1':
-      if(palabraFormada == soluciones[0])
-        esValido = true    
+      if(palabraFormada == soluciones[0]){
+        console.log("[SERVER] ¿ Es",palabraFormada,"igual a",soluciones[0],"?")
+        esValido = true  
+      }       
       break;
     case '6':
-      if(palabraFormada == soluciones[1])
+      if(palabraFormada == soluciones[1]){
+        console.log("[SERVER] ¿ Es",palabraFormada,"igual a",soluciones[1],"?")
         esValido = true
+      }
       break;
     case '7':
-      if(palabraFormada == soluciones[2])
+      if(palabraFormada == soluciones[2]){
+        console.log("[SERVER] ¿ Es",palabraFormada,"igual a",soluciones[2],"?")
         esValido = true
+      }
       break;
     case '12':
-      if(palabraFormada == soluciones[3])
+      if(palabraFormada == soluciones[3]){
+        console.log("[SERVER] ¿ Es",palabraFormada,"igual a",soluciones[3],"?")
         esValido = true
+      }
       break;
     default:
       console.log("no he entrado")
   }
+  console.log("[SERVER] La comprobación en el servidor devuelve:",esValido);
   return esValido;
 }
 
