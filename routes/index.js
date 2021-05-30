@@ -2,10 +2,11 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 const publicDirectory = path.join(__dirname, '../public');
-
+const rootDirectory = path.join(__dirname,'../')
+ 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.sendFile('index.html', {root: publicDirectory}); //DUDA PQ QUITANDO ESTO AUN REDIRECICONA
+  res.sendFile('index.html', {root: publicDirectory});
 });
 
 /* GET cascada 1 page. */
@@ -26,6 +27,11 @@ router.get('/cascada3', function(req, res) {
 /* GET readme.md */
 router.get('/README.md', function(req, res) {
   res.sendFile('README.md', {root: publicDirectory});
+});
+
+/*GET diccionario.txt */
+router.get('/diccionario.txt', function(req, res) {
+  res.sendFile('diccionario.txt', {root: rootDirectory});
 });
 
 /* POST soluciones cascada 1 */

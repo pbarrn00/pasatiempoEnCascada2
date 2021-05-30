@@ -1,55 +1,42 @@
 /**
  * TROZO DE CÓDIGO PARA OBTENER EL DICCIONARIO DEL SERVIDOR
  */
- const TXT_URL = 'https://ordenalfabetix.unileon.es/aw/diccionario.txt';
- const IP_SERVIDOR = 'http://127.0.0.1:3000'
- var diccionario = ""
- 
- async function getDictionary() {
-     const response = await fetch(TXT_URL);
-     const txt = await response.text();
- 
-     if(response.status !== 200)
-         throw Error('No se obtuvo respuesta OK');
- 
-     let dict = txt.split("\n");
-     return dict;
- }
- 
- //Esta función se ejecuta cuando se declara
- (async function() {
-     try{
-         diccionario = await getDictionary();
-         diccionario.push("remato");
-         diccionario.push("nací");
-         diccionario.push("nace");
-         diccionario.push("tolero")
-         diccionario.push("paré")
-         diccionario.push("amarás")
-         diccionario.push("amaras")
-         diccionario.push("asarás")
-         diccionario.push("asaras")
-         diccionario.push("arasas")
-         diccionario.push("brasas")
-         console.log(localStorage);
-     }catch (e) {
-         console.log(`Error: ${e}`)
-         alert("[ERROR]\nNo se ha podido cargar el diccionario del servidor")
-     }
- })()
- 
- /**
-  * Event listeners para cada pulsacion de tecla y para comprobar las palabras
-  */
- window.onload = function(){
-     document.querySelectorAll('input').forEach(e => {
-         if(e.id != "clue0"){
-             e.addEventListener("keyup", nextInput)
-             e.addEventListener("blur", wordHandler)           
-         }
-         
-     });
- }
+//const IP_SERVIDOR_DIC = 'https://ordenalfabetix.unileon.es/aw/';
+const IP_SERVIDOR_DIC = 'http://127.0.0.1:3000'
+const IP_SERVIDOR = 'http://127.0.0.1:3000'
+var diccionario = null
+
+window.onload = function(){
+    init();
+    addEvents();
+    console.log(diccionario)
+}
+
+function init() {
+    fetch(IP_SERVIDOR_DIC+"/diccionario.txt")
+        .then(response => response.text())
+        .then(data => {
+            let dict = data.split("\n");
+            diccionario = dict
+        })
+        .catch(function(){
+            e => console.log(`Error ${e}`)
+        });
+}
+
+
+/**
+ * Event listeners para cada pulsacion de tecla y para comprobar las palabras
+ */
+function addEvents(){
+    document.querySelectorAll('input').forEach(e => {
+        if(e.id != "clue0"){
+            e.addEventListener("keyup", nextInput)
+            e.addEventListener("blur", wordHandler)           
+        }
+        
+    });
+}
  
  /**
   * Funcion que muestra el mensaje de las cookies
@@ -156,7 +143,7 @@
   */
  function enableStorage(){
      document.getElementById('save').disabled = false;
-     if(localStorage.length == 0)
+     if(localStorage[2] == null)
          document.getElementById('load').disabled = true;
      else
          document.getElementById('load').disabled = false;
@@ -200,7 +187,7 @@
   */
  function loadBoardFromStorage(){
      var data = JSON.parse(localStorage.getItem(2));
-     //console.log(data)
+     console.log(data)
      var counter = 0;      
      document.querySelectorAll('input').forEach(e => {
          var cellContent = data[counter++]
