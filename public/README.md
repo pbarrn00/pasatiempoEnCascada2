@@ -35,10 +35,12 @@
 |       usaremos para instalar los módulos del proyecto.                |
 |
 |   2) NPM INSTALL
-|
-|
-|
-|
+|   3) NPM INSTALL EXPRESS  (OPTIONAL)
+|       npm install express
+|   4) NPM INSTALL LIVERELOAD (OPTIONAL)
+|       npm install livereload
+|   5) NPM INSTALL NODEMON (OPTIONAL)
+|       npm install -g nodemon
 |
 |
 |
