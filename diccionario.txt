@@ -6307,6 +6307,7 @@ atarás
 ataras
 atrasa
 abrasa
+asaras
 asarás
 asara
 amara
@@ -9915,6 +9916,7 @@ arañuelo
 aranzada
 arar
 arasá
+arasas
 arate cavate
 aratoria
 aratorio
