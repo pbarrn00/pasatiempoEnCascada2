@@ -8,7 +8,7 @@
 |        ██║  ██║███████╗██║  ██║██████╔╝    ██║ ╚═╝ ██║███████╗        |
 |        ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝     ╚═╝     ╚═╝╚══════╝        |
 |                                                                       |
-+=======================================================================+                                                       
++=======================================================================+
 
 + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - +
 |                                                                       |
@@ -51,7 +51,7 @@
 |       instalarlo porque falte por algun motivo o actualizarlo         |
 |       ejecutamos el comando en el workspace:                          |
 |       "npm install express"                                           |
-|                                                                       |   
+|                                                                       |
 |   4) NPM INSTALL LIVERELOAD (OPCIONAL)                                |
 |       He utilizado el módulo de Live Reload para recargar front-end   |
 |       y este comando no es necesario para instalar el módulo porque   |
