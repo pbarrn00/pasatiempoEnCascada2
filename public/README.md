@@ -96,6 +96,15 @@
 
 + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - +
 |                                                                       |
+|   He añadido en este pequeño apartado del README las soluciones       |
+|   de cada pasatiempos para que le sea más fácil la corrección         |
+|   del pasatiempos 2 al profesor Adolfo Rodríguez de Soto. Dando       |
+|   a entender que el apartado del readme del menú superior izquierdo   |
+|   de cada pasatiempo es para la facilitación de la corrección y no    |
+|   para que lo vea el usuario que juega. Las soluciones se encuentran  |
+|   disponibles a modo de imagen en el repositorio Github del proyecto  |
+|   en la carpeta /public/images/solucion(1/2/3).png                    |
+|                                                                       |
 |   SOLUCIONES DE CADA PASATIEMPOS:                                     |
 |                                                                       |
 |   SOLUCIÓN 1                                                          |
