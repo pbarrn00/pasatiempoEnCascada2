@@ -46,7 +46,7 @@
 |                                                                       |
 |   3) NPM INSTALL EXPRESS  (OPCIONAL)                                  |
 |       He utilizado el módulo de Express como marco de aplicación      |
-|       y este comando no es necesario para isntalar el módulo porque   |
+|       y este comando no es necesario para instalar el módulo porque   |
 |       viene ya instalado en el json, en el caso de que queramos       |
 |       instalarlo porque falte por algun motivo o actualizarlo         |
 |       ejecutamos el comando en el workspace:                          |
@@ -84,6 +84,13 @@
 |           No es necesario iniciar en este modo porque solo es         |
 |           para desarrollo. Si queremos iniciar en este modo ponemos   |
 |           el comando: "npm run live"                                  |
+|                                                                       |
+|       Una vez iniciado el servidor y escuchando, simplemente          |
+|       en nuestro navegador favorito accedemos a la IP local con el    |
+|       puerto 3000. Es decir: "http://127.0.0.1:3000" . Y ya está      |
+|       todo listo.                                                     |
+|                                                                       |
+|                                               ¡A JUGAR!               |
 |                                                                       |
 + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - +
 
